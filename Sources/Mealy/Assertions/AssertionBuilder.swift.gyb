@@ -1,0 +1,57 @@
+// This file was automatically generated and should not be edited.
+%{
+    # Edit this if you want to include more components in a single tuple component
+    maximumNumberOfComponents = 100
+
+    print("Generating AssertionBuilder...")
+}%
+
+@resultBuilder
+public struct AssertionBuilder {
+    public static func buildBlock() -> EmptyAssertion {
+        return EmptyAssertion()
+    }
+
+    public static func buildIf<T: Assertion>(_ component: T?) -> T? {
+        return component
+    }
+
+    public static func buildBlock<T: Assertion>(_ arg0: T) -> T {
+        return arg0
+    }
+
+    public static func buildEither<T: Assertion>(first: T) -> T {
+        return first
+    }
+
+    public static func buildEither<T: Assertion>(second: T) -> T {
+        return second
+    }
+
+    public static func buildIf<T: Assertion>(first: T) -> T {
+        return first
+    }
+
+    public static func buildIf<T: Assertion>(second: T) -> T {
+        return second
+    }
+
+    % for num_components in range(2, maximumNumberOfComponents):
+%{
+        indices = range(0, num_components)
+        generic_names_in = ['T{}'.format(idx) for idx in indices]
+        generics = ', '.join(['{}: Assertion'.format(name) for name in generic_names_in])
+        generic_names_out = ['T{}'.format(idx) for idx in indices]
+        param_names = ['arg{}'.format(idx) for idx in indices]
+        params = ', '.join(['_ {}: {}'.format(param, type) for param, type in zip(param_names, generic_names_in)])
+        tuple_ctor_args = param_names
+}%
+    public static func buildBlock<${generics}>(${params}) -> TupleAssertion<(${', '.join(generic_names_out)})> {
+        return TupleAssertion<(${', '.join(generic_names_out)})>((${', '.join(tuple_ctor_args)}))
+    }
+
+    % end
+}
+%{
+    print("Finished generating AssertionBuilder!")
+}%
