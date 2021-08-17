@@ -13,4 +13,31 @@
 </p>
 
 # Mealy
-Swift Framework for Mealy Machine Based Testing
+
+Mealy allows you to write tests for Object Oriented Software in a more intuitive way while covering the most ground possible. 
+With Mealy, you define your tests by defining a State Machine. 
+The framework will then traverse all the possible iterations of your state machine and test your classes thoroughly.
+
+## Installation
+### Swift Package Manager
+
+You can install Syntax via [Swift Package Manager](https://swift.org/package-manager/) by adding the following line to your `Package.swift`:
+
+```swift
+import PackageDescription
+
+let package = Package(
+    [...]
+    dependencies: [
+        .package(url: "https://github.com/nerdsupremacist/Mealy.git", from: "0.1.0")
+    ]
+)
+```
+
+## Usage
+
+## Contributions
+Contributions are welcome and encouraged!
+
+## License
+Mealy is available under the MIT license. See the LICENSE file for more info.
