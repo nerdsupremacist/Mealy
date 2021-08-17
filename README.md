@@ -36,6 +36,64 @@ let package = Package(
 
 ## Usage
 
+Let's say you're testing a Switch class. 
+We of course don't know anything about the implementation, but we can imagine the class like a state machine:
+
+![](https://www.itemis.com/hubfs/yakindu/statechart-tools/documentation/images/overview_simple_moore.jpg)
+
+To implement your tests, you implement each state. A state is a class with:
+- A `test(systemUnderTest:)` function, where you can run all your assertions. Verifying that the object is in the correct state
+- A series of functions with a single argument (which is the system under test) and returns the next state
+
+```swift
+class OffState: State {
+    func test(system: Switch) -> some Assertion {
+        Assert(!system.isOn, message: "Expected Switch to be Off")
+    }
+
+    func pressButton(system: Switch) -> OnState {
+        system.toggle()
+        return OnState()
+    }
+}
+
+class OnState: State {
+    func test(system: Switch) -> some Assertion {
+        Assert(system.isOn, message: "Expected Switch to be On")
+    }
+
+    func pressButton(system: Switch) -> OffState {
+        system.toggle()
+        return OffState()
+    }
+}
+```
+
+Then we can define the test cases, by adding a way to get to the initial state, and the initial system under test:
+
+```swift
+class TestCases: MealyTestDefinition {
+    func initialState() -> OffState {
+        return OffState()
+    }
+
+    func initialSystemUnderTest() -> Switch {
+        return Switch(isOn: false)
+    }
+}
+```
+
+To run the tests, call `TestCases.test`:
+
+```swift
+final class Tests: XCTestCase {
+    func testStateMachine() {
+        let cases = TestCases()
+        cases.test(desiredCoverage: .edge)
+    }
+}
+```
+
 ## Contributions
 Contributions are welcome and encouraged!
 
