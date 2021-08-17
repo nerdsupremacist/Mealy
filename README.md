@@ -39,7 +39,9 @@ let package = Package(
 Let's say you're testing a Switch class. 
 We of course don't know anything about the implementation, but we can imagine the class like a state machine:
 
-![](https://www.itemis.com/hubfs/yakindu/statechart-tools/documentation/images/overview_simple_moore.jpg)
+<p align="center">
+    <img src="https://www.itemis.com/hubfs/yakindu/statechart-tools/documentation/images/overview_simple_moore.jpg" width="400" max-width="90%" alt="Mealy" />
+</p>
 
 To implement your tests, you implement each state. A state is a class with:
 - A `test(systemUnderTest:)` function, where you can run all your assertions. Verifying that the object is in the correct state
