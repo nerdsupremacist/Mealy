@@ -220,18 +220,19 @@ private struct Transition {
     let info: MethodInfo
 }
 
+typealias TestAnyFunctionType = @convention(thin) (UnsafeRawPointer, UnsafeRawPointer, String, ProtocolConformanceRecord) -> TestResults
+
 private let _testAnyPointer = testAnyPointer()
+private let testAnyFunction = unsafeBitCast(_testAnyPointer, to: TestAnyFunctionType.self)
 
 private func testAny<SystemUnderTest>(state: Any, with systemUnderTest: SystemUnderTest, group: String) -> TestResults? {
     let implementationType = type(of: state)
     guard let conformanceRecord = ProtocolConformanceRecord(implementationType: implementationType, protocolType: .state) else { return nil }
-
-    let function = unsafeBitCast(_testAnyPointer, to: (@convention(thin) (UnsafeRawPointer, UnsafeRawPointer, String, ProtocolConformanceRecord) -> TestResults).self)
     let unmanaged = Unmanaged.passUnretained(state as AnyObject)
     let statePointer = unmanaged.toOpaque()
 
     return withUnsafePointer(to: systemUnderTest) { systemUnderTestPointer in
-        return function(statePointer, systemUnderTestPointer, group, conformanceRecord)
+        return testAnyFunction(statePointer, systemUnderTestPointer, group, conformanceRecord)
     }
 }
 
