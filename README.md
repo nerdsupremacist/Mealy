@@ -44,7 +44,7 @@ We of course don't know anything about the implementation, but we can imagine th
 </p>
 
 To implement your tests, you implement each state. A state is a class with:
-- A `test(systemUnderTest:)` function, where you can run all your assertions. Verifying that the object is in the correct state
+- A `test(system:)` function, where you can run all your assertions. Verifying that the object is in the correct state
 - A series of functions with a single argument (which is the system under test) and returns the next state
 
 ```swift
