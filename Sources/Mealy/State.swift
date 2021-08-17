@@ -1,5 +1,7 @@
 
-public protocol State {
+@_exported import Assert
+
+public protocol State: AnyObject {
     associatedtype SystemUnderTest
     associatedtype Assertions: Assertion
 

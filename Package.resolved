@@ -1,0 +1,52 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Assert",
+        "repositoryURL": "https://github.com/nerdsupremacist/Assert.git",
+        "state": {
+          "branch": null,
+          "revision": "a158ada48c7a7543a9eaffcd2fc3f069e63503a3",
+          "version": "0.1.0"
+        }
+      },
+      {
+        "package": "AssociatedTypeRequirementsKit",
+        "repositoryURL": "https://github.com/nerdsupremacist/AssociatedTypeRequirementsKit.git",
+        "state": {
+          "branch": null,
+          "revision": "2e4c49c21ffb2135f1c99fbfcf2119c9d24f5e8c",
+          "version": "0.3.2"
+        }
+      },
+      {
+        "package": "CRuntime",
+        "repositoryURL": "https://github.com/nerdsupremacist/CRuntime.git",
+        "state": {
+          "branch": null,
+          "revision": "95f911318d8c885f6fc05e971471f94adfd39405",
+          "version": "2.1.2"
+        }
+      },
+      {
+        "package": "CwlDemangle",
+        "repositoryURL": "https://github.com/nerdsupremacist/CwlDemangle.git",
+        "state": {
+          "branch": null,
+          "revision": "ca1ffdc206f76dc5f217f27ea2a0bbd2241a4a92",
+          "version": "0.1.1-beta.1"
+        }
+      },
+      {
+        "package": "Runtime",
+        "repositoryURL": "https://github.com/nerdsupremacist/Runtime.git",
+        "state": {
+          "branch": null,
+          "revision": "6316617cebf5d6c5055062266c3d9a9df702e5ce",
+          "version": "2.1.2-beta.14"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
