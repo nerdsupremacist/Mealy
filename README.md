@@ -96,6 +96,12 @@ final class Tests: XCTestCase {
 }
 ```
 
+This means that for the state machine, Mealy will create tests so that we cover every possible edge/transition of our State Machine.
+This means it will test:
+- Doing nothing
+- Toggle
+- Toggle (to On) -> Toggle (to Off)
+
 ## Contributions
 Contributions are welcome and encouraged!
 
