@@ -3,21 +3,32 @@ import XCTest
 import Assert
 
 final class MealyTests: XCTestCase {
-    func testExample() {
-        let definition = TestCases()
+    func testCorrect() {
+        let definition = TestCases(type: SwitchCorrect.self)
         definition.test(desiredCoverage: .edge)
+    }
+
+    func testFindsFault() {
+        let definition = TestCases(type: SwitchFaulty.self)
+        let assertions = definition.testResults(desiredCoverage: .edge)
+
+        xcTest {
+            Assert(!assertions.failures.isEmpty, message: "Expected to find a failure")
+        }
     }
 }
 
 protocol Switch {
     var isOn: Bool { get }
     func toggle()
+
+    init(isOn: Bool)
 }
 
-class SwitchImplementation: Switch {
+class SwitchCorrect: Switch {
     private(set) var isOn: Bool
 
-    init(isOn: Bool) {
+    required init(isOn: Bool) {
         self.isOn = isOn
     }
 
@@ -26,13 +37,31 @@ class SwitchImplementation: Switch {
     }
 }
 
+class SwitchFaulty: Switch {
+    private(set) var isOn: Bool
+
+    required init(isOn: Bool) {
+        self.isOn = isOn
+    }
+
+    func toggle() {
+        isOn = true
+    }
+}
+
 class TestCases: MealyTestDefinition {
+    let type: Switch.Type
+
+    init(type: Switch.Type) {
+        self.type = type
+    }
+
     func initialState() -> OffState {
         return OffState()
     }
 
     func initialSystemUnderTest() -> Switch {
-        return SwitchImplementation(isOn: false)
+        return type.init(isOn: false)
     }
 }
 
