@@ -14,9 +14,16 @@
 
 # Mealy
 
+
+Test Selection is hard. Writing all kinds of cases is horribly boring...
 Mealy allows you to write tests for Object Oriented Software in a more intuitive way while covering the most ground possible. 
 With Mealy, you define your tests by implementing a State Machine. 
 The framework will then traverse all the possible iterations of your state machine and test your classes thoroughly.
+
+## References
+This framework is based on the ideas presented in the Object Oriented sections of the TUM lecture on [Advanced Topics of Software Testing](https://www.in.tum.de/en/i04/teaching/). 
+- [Model-based testing](https://dl.acm.org/doi/10.1145/1062455.1062636)
+- [Model-Based Testing of Reactive Systems](https://link.springer.com/book/10.1007/b137241)
 
 ## Installation
 ### Swift Package Manager
