@@ -46,8 +46,8 @@ We of course don't know anything about the implementation, but we can imagine th
 </p>
 
 To implement your tests, you implement each state. A state is a class with:
-- A `test(system:)` function, where you can run all your assertions. Verifying that the object is in the correct state
-- A series of functions with a single argument (which is the system under test) and returns the next state
+- A `test(system:)` function, where you can run all your assertions. Verifying that the object is in the correct state. This function is using a Result Builder built for a tiny library called [Assert](https://github.com/nerdsupremacist/Assert). These types of assertion allow Mealy to manipulate the results, and provide more context, to help you debug your faults in the future.
+- A series of functions with a single argument (which is the system under test) and returns the next state.
 
 ```swift
 class OffState: State {
