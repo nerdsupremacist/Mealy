@@ -11,7 +11,7 @@ let package = Package(
                  targets: ["Mealy"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/nerdsupremacist/Assert.git", from: "0.1.0"),
+        .package(url: "https://github.com/nerdsupremacist/Assert.git", from: "1.0.0"),
         .package(url: "https://github.com/nerdsupremacist/Runtime.git", from: "2.1.2-beta.14"),
         .package(url: "https://github.com/nerdsupremacist/AssociatedTypeRequirementsKit.git",
                  from: "0.3.2")

@@ -37,7 +37,7 @@ class TestCases: MealyTestDefinition {
 }
 
 class OffState: State {
-    func test(system: Switch) -> some Assertion {
+    func test(system: Switch) -> some Test {
         Assert(!system.isOn, message: "Expected Switch to be Off")
     }
 
@@ -48,7 +48,7 @@ class OffState: State {
 }
 
 class OnState: State {
-    func test(system: Switch) -> some Assertion {
+    func test(system: Switch) -> some Test {
         Assert(system.isOn, message: "Expected Switch to be On")
     }
 

@@ -3,8 +3,8 @@
 
 public protocol State: AnyObject {
     associatedtype SystemUnderTest
-    associatedtype Assertions: Assertion
+    associatedtype StateTest: Test
 
-    @AssertionBuilder
-    func test(system: SystemUnderTest) -> Assertions
+    @TestBuilder
+    func test(system: SystemUnderTest) -> StateTest
 }

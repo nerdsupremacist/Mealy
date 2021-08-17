@@ -17,7 +17,7 @@ extension MealyTestDefinition {
         var context = TestExecutionContext(desiredCoverage: desiredCoverage, type: SystemUnderTest.self)
         let initialState = initialState()
         context.addRemainingPaths(state: initialState, current: nil)
-        var results: [TestResults] = []
+        var results: TestResults = .empty
 
         while let path = context.next() {
             var value = initialSystemUnderTest()
@@ -29,14 +29,11 @@ extension MealyTestDefinition {
                 fatalError("Invalid final state \(finalState)")
             }
 
-            results += [pathResults]
+            results = results + pathResults
             context.addRemainingPaths(state: finalState, current: path)
         }
 
-        let failures = results.flatMap { $0.failures }
-        return try! createInstance { _ in
-            return failures
-        }
+        return results
     }
 
 }
