@@ -8,7 +8,12 @@ import Assert
 
 extension MealyTestDefinition {
 
-    public func test(desiredCoverage: DesiredCoverage = .edge) -> [TestResults] {
+    public func test(desiredCoverage: DesiredCoverage) {
+        let results = testResults(desiredCoverage: desiredCoverage)
+        results.xcTest()
+    }
+
+    public func testResults(desiredCoverage: DesiredCoverage) -> TestResults {
         var context = TestExecutionContext(desiredCoverage: desiredCoverage, type: SystemUnderTest.self)
         let initialState = initialState()
         context.addRemainingPaths(state: initialState, current: nil)
@@ -28,7 +33,10 @@ extension MealyTestDefinition {
             context.addRemainingPaths(state: finalState, current: path)
         }
 
-        return results
+        let failures = results.flatMap { $0.failures }
+        return try! createInstance { _ in
+            return failures
+        }
     }
 
 }

@@ -4,47 +4,56 @@ import Assert
 
 final class MealyTests: XCTestCase {
     func testExample() {
-        let definition = ArrayTests()
-        let tests = definition.test()
-        print(tests)
+        let definition = TestCases()
+        definition.test(desiredCoverage: .edge)
     }
 }
 
-struct ArrayTests: MealyTestDefinition {
-    func initialSystemUnderTest() -> [String] {
-        return []
+protocol Switch {
+    var isOn: Bool { get }
+    func toggle()
+}
+
+class SwitchImplementation: Switch {
+    private(set) var isOn: Bool
+
+    init(isOn: Bool) {
+        self.isOn = isOn
     }
 
-    func initialState() -> EmptyState {
-        return EmptyState()
+    func toggle() {
+        isOn.toggle()
     }
 }
 
-class EmptyState: State {
-    func test(system: [String]) -> some Assertion {
-        Assert(system.count, equals: 0)
-        Assert(system.first, equals: nil)
+class TestCases: MealyTestDefinition {
+    func initialState() -> OffState {
+        return OffState()
     }
 
-    func addString(systemUnderTest: inout [String]) -> OneItemState {
-        systemUnderTest += ["test"]
-        return OneItemState(value: "test")
+    func initialSystemUnderTest() -> Switch {
+        return SwitchImplementation(isOn: false)
     }
 }
 
-class OneItemState: State {
-    let value: String
-
-    init(value: String) {
-        self.value = value
+class OffState: State {
+    func test(system: Switch) -> some Assertion {
+        Assert(!system.isOn, message: "Expected Switch to be Off")
     }
 
-    func test(system: [String]) -> some Assertion {
-        Assert(system.count, equals: 1)
+    func pressButton(system: Switch) -> OnState {
+        system.toggle()
+        return OnState()
+    }
+}
+
+class OnState: State {
+    func test(system: Switch) -> some Assertion {
+        Assert(system.isOn, message: "Expected Switch to be On")
     }
 
-    func empty(systemUnderTest: inout [String]) -> EmptyState {
-        systemUnderTest = []
-        return EmptyState()
+    func pressButton(system: Switch) -> OffState {
+        system.toggle()
+        return OffState()
     }
 }
