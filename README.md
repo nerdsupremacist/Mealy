@@ -15,7 +15,7 @@
 # Mealy
 
 Mealy allows you to write tests for Object Oriented Software in a more intuitive way while covering the most ground possible. 
-With Mealy, you define your tests by defining a State Machine. 
+With Mealy, you define your tests by implementing a State Machine. 
 The framework will then traverse all the possible iterations of your state machine and test your classes thoroughly.
 
 ## Installation
