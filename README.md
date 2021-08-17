@@ -100,7 +100,7 @@ final class Tests: XCTestCase {
 
 This means that for the state machine, Mealy will create tests so that we cover every possible edge/transition of our State Machine.
 This means it will test 3 cases:
-- Doing nothing
+- Doing nothing (verifies that the Switch started in the Off State)
 - Toggle
 - Toggle (to On) -> Toggle (to Off)
 
