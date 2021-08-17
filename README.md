@@ -51,7 +51,7 @@ To implement your tests, you implement each state. A state is a class with:
 
 ```swift
 class OffState: State {
-    func test(system: Switch) -> some Assertion {
+    func test(system: Switch) -> some Test {
         Assert(!system.isOn, message: "Expected Switch to be Off")
     }
 
@@ -62,7 +62,7 @@ class OffState: State {
 }
 
 class OnState: State {
-    func test(system: Switch) -> some Assertion {
+    func test(system: Switch) -> some Test {
         Assert(system.isOn, message: "Expected Switch to be On")
     }
 
