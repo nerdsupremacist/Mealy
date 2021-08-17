@@ -20,31 +20,27 @@ final class MealyTests: XCTestCase {
 
 protocol Switch {
     var isOn: Bool { get }
-    func toggle()
+    mutating func toggle()
 
     init(isOn: Bool)
 }
 
-class SwitchCorrect: Switch {
+struct SwitchCorrect: Switch {
     private(set) var isOn: Bool
 
-    required init(isOn: Bool) {
-        self.isOn = isOn
-    }
-
-    func toggle() {
+    mutating func toggle() {
         isOn.toggle()
     }
 }
 
-class SwitchFaulty: Switch {
+struct SwitchFaulty: Switch {
     private(set) var isOn: Bool
 
-    required init(isOn: Bool) {
+    init(isOn: Bool) {
         self.isOn = isOn
     }
 
-    func toggle() {
+    mutating func toggle() {
         isOn = true
     }
 }
@@ -70,7 +66,7 @@ class OffState: State {
         Assert(!system.isOn, message: "Expected Switch to be Off")
     }
 
-    func pressButton(system: Switch) -> OnState {
+    func pressButton(system: inout Switch) -> OnState {
         system.toggle()
         return OnState()
     }
@@ -81,7 +77,7 @@ class OnState: State {
         Assert(system.isOn, message: "Expected Switch to be On")
     }
 
-    func pressButton(system: Switch) -> OffState {
+    func pressButton(system: inout Switch) -> OffState {
         system.toggle()
         return OffState()
     }
