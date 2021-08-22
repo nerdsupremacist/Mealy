@@ -87,7 +87,7 @@ class TestCases: MealyTestDefinition {
 }
 ```
 
-To run the tests, call `TestCases.test`:
+To run the tests, call `TestCases.test` with `.edge` Coverage:
 
 ```swift
 final class Tests: XCTestCase {
@@ -103,6 +103,14 @@ This means it will test 3 cases:
 - Doing nothing (verifies that the Switch started in the Off State)
 - Toggle
 - Toggle (to On) -> Toggle (to Off)
+
+The desired coverage tells Mealy when it's ok to stop testing. The options are:
+- State coverage (stop when you have reached every state once)
+- Edge coverage (stop when you have gone through every edge/transition once)
+- Path coverage (stop when you have gone through every edge/transition combination possible (without cycles))
+    - Path coverage explodes exponentially. So in order to limit it a bit:
+        - Depth: Maximum depth of transitions allowed
+        - State Repeats: Maximum number of times you are allowed to reach any state
 
 ## References
 This framework is based on the ideas presented in the Object Oriented sections of the TUM lecture on [Advanced Topics of Software Testing](https://www.in.tum.de/en/i04/teaching/). 
