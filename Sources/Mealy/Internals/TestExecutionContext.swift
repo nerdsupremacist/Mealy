@@ -1,4 +1,5 @@
 
+import Foundation
 import Assert
 @_implementationOnly import Runtime
 @_implementationOnly import ProtocolConformance
@@ -69,12 +70,25 @@ private struct TestExecutionContext<SystemUnderTest> {
 
         let info = try! typeInfo(of: type, include: .methods)
         let transitions = info.methods.compactMap { method -> Transition? in
+            // Check arguments only include system under test
             guard method.arguments.count == 1 else { return nil }
             let argumentType = method.arguments[0].type
             guard argumentType == systemUnderTestType || argumentType == systemUnderTestInOutType else { return nil }
+
+            // Check that the return type conforms to state
             let returnType = method.returnType
-            guard ProtocolConformanceRecord(implementationType: returnType, protocolType: .state) != nil else { return nil }
-            // TODO: Check for system under test constraint
+            guard let conformanceRecord = ProtocolConformanceRecord(implementationType: returnType, protocolType: .state) else { return nil }
+
+            // Check that system under test for the new state is the same as the current system under test
+            let pointer = conformanceRecord.witnessTable!.assumingMemoryBound(to: UnsafeRawPointer.self).advanced(by: 2).pointee
+            var info = Dl_info()
+            dladdr(pointer, &info)
+            guard let cString = info.dli_sname else { return nil }
+            let name = String(cString: cString)
+            let lastComponent = name.components(separatedBy: " ").last!
+            guard let type = _typeByName(lastComponent) else { return nil }
+            guard systemUnderTestType == type else { return nil }
+
             return Transition(id: Int(bitPattern: method.address),
                               from: typeAsInteger,
                               expectedTo: unsafeBitCast(returnType, to: Int.self),
